@@ -1,7 +1,34 @@
 pipeline {
     agent any
+    parameters {
+        choice(
+            name: 'ENV',
+            choices: ['DEV','QA','UAT','PROD'],
+            description: 'Select environment'
+        )
 
+        booleanParam(
+            name: 'RUN_TESTS',
+            defaultValue: true,
+            description: 'Run tests'
+        )
+
+        booleanParam(
+            name: 'DEPLOY',
+            defaultValue: false,
+            description: 'Deploy application'
+        )
+    }
     stages {
+
+        stage('Show Parameters') {
+                steps {
+                    echo "Environment: ${params.ENV}"
+                    echo "Run Tests: ${params.RUN_TESTS}"
+                    echo "Deploy: ${params.DEPLOY}"
+                }
+            }
+
         stage('Clone') {
             steps {
                 git branch: 'main',
@@ -29,7 +56,21 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                bat 'echo deploy stage'
+            //Suppose deployment should happen only if checkbox is selected.
+                        when {
+                            expression { params.DEPLOY }
+                        }
+                script {
+
+                    if(params.ENV == 'DEV') {
+                        bat 'echo Deploying to DEV'
+                    }
+
+                    if(params.ENV == 'PROD') {
+                        bat 'echo Deploying to PROD'
+                    }
+
+                }
             }
         }
 
