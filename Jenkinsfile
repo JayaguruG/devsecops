@@ -32,5 +32,10 @@ pipeline {
                 bat 'echo deploy stage'
             }
         }
+
+        stage('End') {
+            steps {
+                bat 'echo end stage'
+            }
     }
 }
