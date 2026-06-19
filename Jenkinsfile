@@ -38,4 +38,5 @@ pipeline {
                 bat 'echo end stage'
             }
     }
+  }
 }
