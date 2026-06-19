@@ -55,13 +55,13 @@ pipeline {
         }
 
         stage('Deploy') {
-            steps {
             //Suppose deployment should happen only if checkbox is selected.
                         when {
                             expression { params.DEPLOY }
                         }
+            steps {
                 script {
-
+                    bat "echo Deploying to ${params.ENV} env"
                     if(params.ENV == 'DEV') {
                         bat 'echo Deploying to DEV'
                     }
