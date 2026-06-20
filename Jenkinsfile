@@ -54,7 +54,7 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy-test') {
             //Suppose deployment should happen only if checkbox is selected.
                         when {
                             expression { params.DEPLOY }
@@ -84,6 +84,21 @@ pipeline {
         		bat 'docker build -t flask-demo .'
     			}
 	}
+
+stage('Deploy-docker') {
+            //Suppose deployment should happen only if checkbox is selected.
+                        when {
+                            expression { params.DEPLOY }
+                        }
+    steps {
+        script {
+            bat '''
+            docker rm -f flask-container 2>NUL
+            docker run -d --name flask-container -p 5000:5000 flask-demo
+            '''
+        }
+    }
+}
 
         stage('End') {
             steps {
