@@ -75,9 +75,14 @@ pipeline {
         }
 
         stage('Docker Test') {
-    steps {
-        bat 'docker ps'
+    		steps {
+        		bat 'docker ps'
     		}
+	}
+	stage('Build Docker Image') {
+    		steps {
+        		bat 'docker build -t flask-demo .'
+    			}
 	}
 
         stage('End') {
