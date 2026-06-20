@@ -74,6 +74,12 @@ pipeline {
             }
         }
 
+        stage('Docker Test') {
+    steps {
+        bat 'docker ps'
+    		}
+	}
+
         stage('End') {
             steps {
                 bat 'echo end stage'
