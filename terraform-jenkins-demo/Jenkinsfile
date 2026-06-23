@@ -1,27 +1,22 @@
 pipeline {
+    agent any
 
-agent any
+    stages {
 
-stages {
+        stage('Terraform Init') {
+            steps {
+                dir('terraform-jenkins-demo') {
+                    bat 'terraform init'
+                }
+            }
+        }
 
-    stage('Checkout') {
-        steps {
-            checkout scm
+        stage('Terraform Plan') {
+            steps {
+                dir('terraform-jenkins-demo') {
+                    bat 'terraform plan'
+                }
+            }
         }
     }
-
-    stage('Terraform Init') {
-        steps {
-            bat 'terraform init'
-        }
-    }
-
-    stage('Terraform Plan') {
-        steps {
-            bat 'terraform plan'
-        }
-    }
-
-}
-
 }
