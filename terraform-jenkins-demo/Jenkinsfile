@@ -1,22 +1,33 @@
 pipeline {
-    agent any
 
-    stages {
+agent any
 
-        stage('Terraform Init') {
-            steps {
-                dir('terraform-jenkins-demo') {
-                    bat 'terraform init'
-                }
-            }
-        }
+stages {
 
-        stage('Terraform Plan') {
-            steps {
-                dir('terraform-jenkins-demo') {
-                    bat 'terraform plan'
-                }
-            }
+    stage('Debug') {
+        steps {
+            bat 'dir'
         }
     }
+
+    stage('Terraform Init') {
+        steps {
+            bat 'terraform init'
+        }
+    }
+
+    stage('Terraform Plan') {
+        steps {
+            bat 'terraform plan'
+        }
+    }
+
+    stage('Terraform Apply') {
+        steps {
+            bat 'terraform apply -auto-approve'
+        }
+    }
+
+}
+
 }
