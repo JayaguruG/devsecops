@@ -26,6 +26,14 @@ stages {
             }
         }
     }
+stage('Terraform Destroy') {
+    steps {
+        dir('terraform-jenkins-demo') {
+            bat 'terraform destroy -auto-approve'
+        }
+    }
+}
+
 }
 
 }
